@@ -1,5 +1,5 @@
-// Note positions for treble and bass staves
-// You can expand these easily later
+let lastPlaced = []; // store placed notes for undo
+let pendingNote = null; // note waiting for accidental selection
 
 const treblePositions = [
     { code: "1G", y: 0 },
@@ -16,7 +16,7 @@ const treblePositions = [
 
 const bassPositions = [
     { code: "0D", y: -10 },
-    { code: "0C", y: 0 },   // Middle C
+    { code: "0C", y: 0 },
     { code: "-1B", y: 10 },
     { code: "-1A", y: 20 },
     { code: "-1G", y: 30 },
@@ -42,16 +42,67 @@ function createSlots(staffId, positions, outputId) {
             slot.style.left = x + "px";
             slot.style.top = (20 + pos.y) + "px";
             slot.dataset.code = pos.code;
+            slot.dataset.x = x;
+            slot.dataset.y = 20 + pos.y;
+            slot.dataset.output = outputId;
 
-            slot.addEventListener("click", () => {
-                const ta = document.getElementById(outputId);
-                ta.value += (ta.value.trim() ? " " : "") + pos.code;
-            });
+            slot.addEventListener("click", openAccidentalPopup);
 
             staff.appendChild(slot);
         });
     }
 }
+
+function openAccidentalPopup(e) {
+    const popup = document.getElementById("accidentalPopup");
+    popup.style.left = e.pageX + "px";
+    popup.style.top = e.pageY + "px";
+    popup.style.display = "block";
+
+    pendingNote = {
+        code: e.target.dataset.code,
+        x: e.target.dataset.x,
+        y: e.target.dataset.y,
+        output: e.target.dataset.output
+    };
+}
+
+document.querySelectorAll("#accidentalPopup button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const acc = btn.dataset.acc;
+        placeNote(pendingNote, acc);
+        document.getElementById("accidentalPopup").style.display = "none";
+        pendingNote = null;
+    });
+});
+
+function placeNote(note, accidental) {
+    const fullCode = note.code + accidental;
+
+    const ta = document.getElementById(note.output);
+    ta.value += (ta.value.trim() ? " " : "") + fullCode;
+
+    const head = document.createElement("div");
+    head.className = "notehead";
+    head.style.left = note.x + "px";
+    head.style.top = note.y + "px";
+
+    document.body.appendChild(head);
+
+    lastPlaced.push({ element: head, output: note.output, code: fullCode });
+}
+
+document.getElementById("undoBtn").addEventListener("click", () => {
+    const last = lastPlaced.pop();
+    if (!last) return;
+
+    last.element.remove();
+
+    const ta = document.getElementById(last.output);
+    let parts = ta.value.trim().split(/\s+/);
+    parts.pop();
+    ta.value = parts.join(" ");
+});
 
 createSlots("trebleStaff", treblePositions, "rightCodes");
 createSlots("bassStaff", bassPositions, "leftCodes");
