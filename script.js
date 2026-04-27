@@ -1,41 +1,38 @@
 let lastPlaced = [];
 let pendingNote = null;
 
-// TREBLE STAFF (correct real-world mapping)
-// bottom line = E4 = 0E
-// second line = G4 = 0G
-// middle C = ledger below = 0C
-
+// ---------------- TREBLE STAFF (correct mapping) ----------------
 const treblePositions = [
-    { code: "1G", y: -10 }, // above top line
+    { code: "1G", y: -10 }, // space above top line
     { code: "1F", y: 0 },   // top line
-    { code: "1E", y: 10 },
-    { code: "1D", y: 20 },
-    { code: "1C", y: 30 },
+    { code: "1E", y: 10 },  // space
+    { code: "1D", y: 20 },  // 2nd line from top
+    { code: "1C", y: 30 },  // space
     { code: "0B", y: 40 },  // middle line
-    { code: "0A", y: 50 },
-    { code: "0G", y: 60 },  // SECOND LINE FROM BOTTOM (correct G4)
-    { code: "0F", y: 70 },
+    { code: "0A", y: 50 },  // space
+    { code: "0G", y: 60 },  // 2nd line from bottom (correct G4)
+    { code: "0F", y: 70 },  // space
     { code: "0E", y: 80 },  // bottom line
-    { code: "0D", y: 90 },
+    { code: "0D", y: 90 },  // space below
     { code: "0C", y: 100 }  // Middle C (ledger)
 ];
 
-// BASS STAFF (correct mapping)
+// ---------------- BASS STAFF (correct mapping) ----------------
 const bassPositions = [
-    { code: "0C", y: -10 },  // Middle C (ledger above)
-    { code: "-1B", y: 0 },
-    { code: "-1A", y: 10 },  // top line
-    { code: "-1G", y: 20 },
-    { code: "-1F", y: 30 },
-    { code: "-1E", y: 40 },  // middle line
-    { code: "-1D", y: 50 },
-    { code: "-1C", y: 60 },
-    { code: "-2B", y: 70 },  // bottom line
-    { code: "-2A", y: 80 },
-    { code: "-2G", y: 90 }
+    { code: "-1B", y: -10 }, // space above top line
+    { code: "-1A", y: 0 },   // top line
+    { code: "-1G", y: 10 },  // space
+    { code: "-1F", y: 20 },  // 2nd line from top
+    { code: "-1E", y: 30 },  // space
+    { code: "-1D", y: 40 },  // middle line
+    { code: "-1C", y: 50 },  // space
+    { code: "-2B", y: 60 },  // 2nd line from bottom
+    { code: "-2A", y: 70 },  // space
+    { code: "-2G", y: 80 },  // bottom line
+    { code: "0C", y: -20 }   // Middle C (ledger above)
 ];
 
+// ---------------- SLOT CREATION ----------------
 function createSlots(staffId, positions, outputId) {
     const staff = document.getElementById(staffId);
     const width = 560;
@@ -61,6 +58,7 @@ function createSlots(staffId, positions, outputId) {
     }
 }
 
+// ---------------- ACCIDENTAL POPUP ----------------
 function openAccidentalPopup(e) {
     const popup = document.getElementById("accidentalPopup");
     popup.style.left = e.pageX + "px";
@@ -83,6 +81,7 @@ document.querySelectorAll("#accidentalPopup button").forEach(btn => {
     });
 });
 
+// ---------------- PLACE NOTE ----------------
 function placeNote(note, accidental) {
     const fullCode = note.code + accidental;
 
@@ -99,6 +98,7 @@ function placeNote(note, accidental) {
     lastPlaced.push({ element: head, output: note.output, code: fullCode });
 }
 
+// ---------------- UNDO ----------------
 document.getElementById("undoBtn").addEventListener("click", () => {
     const last = lastPlaced.pop();
     if (!last) return;
@@ -111,5 +111,6 @@ document.getElementById("undoBtn").addEventListener("click", () => {
     ta.value = parts.join(" ");
 });
 
+// ---------------- INIT ----------------
 createSlots("trebleStaff", treblePositions, "rightCodes");
 createSlots("bassStaff", bassPositions, "leftCodes");
