@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clickable Sheet Music → Code</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Sheet Music → Code</h1>
+
+<div class="staff-container">
+
+    <!-- Treble Staff -->
+    <div class="staff-block" id="trebleStaff">
+        <div class="staff-label">Right (Treble)</div>
+        <div class="staff-lines">
+            <div class="staff-line" style="top:0;"></div>
+            <div class="staff-line" style="top:20px;"></div>
+            <div class="staff-line" style="top:40px;"></div>
+            <div class="staff-line" style="top:60px;"></div>
+            <div class="staff-line" style="top:80px;"></div>
+        </div>
+    </div>
+
+    <!-- Bass Staff -->
+    <div class="staff-block" id="bassStaff">
+        <div class="staff-label">Left (Bass)</div>
+        <div class="staff-lines">
+            <div class="staff-line" style="top:0;"></div>
+            <div class="staff-line" style="top:20px;"></div>
+            <div class="staff-line" style="top:40px;"></div>
+            <div class="staff-line" style="top:60px;"></div>
+            <div class="staff-line" style="top:80px;"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="output-area">
+    <div>
+        <h3>Right Hand Codes</h3>
+        <textarea id="rightCodes" readonly></textarea>
+    </div>
+    <div>
+        <h3>Left Hand Codes</h3>
+        <textarea id="leftCodes" readonly></textarea>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
