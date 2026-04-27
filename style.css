@@ -1,0 +1,80 @@
+body {
+    background: #111;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #9cf;
+}
+
+.staff-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.staff-block {
+    position: relative;
+    width: 600px;
+    height: 120px;
+}
+
+.staff-label {
+    position: absolute;
+    left: -70px;
+    top: 40px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.staff-lines {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 20px;
+    height: 80px;
+}
+
+.staff-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eee;
+}
+
+.note-slot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    background: transparent;
+}
+
+.note-slot:hover {
+    outline: 1px solid #4af;
+}
+
+.output-area {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+textarea {
+    width: 280px;
+    height: 120px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 10px;
+    font-size: 14px;
+}
