@@ -52,7 +52,6 @@ h1 {
     position: absolute;
     width: 20px;
     height: 20px;
-    border-radius: 50%;
     cursor: pointer;
     transform: translate(-50%, -50%);
     background: transparent;
@@ -60,6 +59,33 @@ h1 {
 
 .note-slot:hover {
     outline: 1px solid #4af;
+}
+
+.notehead {
+    position: absolute;
+    width: 18px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+}
+
+.controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #28a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #3bd;
 }
 
 .output-area {
@@ -77,4 +103,20 @@ textarea {
     border: 1px solid #555;
     padding: 10px;
     font-size: 14px;
+}
+
+.popup {
+    position: absolute;
+    display: none;
+    background: #222;
+    border: 1px solid #555;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.popup button {
+    margin: 3px;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
 }
