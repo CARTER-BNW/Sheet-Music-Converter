@@ -37,6 +37,10 @@
 
 </div>
 
+<div class="controls">
+    <button id="undoBtn">Undo Last Note</button>
+</div>
+
 <div class="output-area">
     <div>
         <h3>Right Hand Codes</h3>
@@ -46,6 +50,13 @@
         <h3>Left Hand Codes</h3>
         <textarea id="leftCodes" readonly></textarea>
     </div>
+</div>
+
+<!-- Accidentals popup -->
+<div id="accidentalPopup" class="popup">
+    <button data-acc="">♮</button>
+    <button data-acc="^">♯</button>
+    <button data-acc="#">♭</button>
 </div>
 
 <script src="script.js"></script>
