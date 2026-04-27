@@ -1,30 +1,39 @@
-let lastPlaced = []; // store placed notes for undo
-let pendingNote = null; // note waiting for accidental selection
+let lastPlaced = [];
+let pendingNote = null;
+
+// TREBLE STAFF (correct real-world mapping)
+// bottom line = E4 = 0E
+// second line = G4 = 0G
+// middle C = ledger below = 0C
 
 const treblePositions = [
-    { code: "1G", y: 0 },
-    { code: "1F", y: 10 },
-    { code: "1E", y: 20 },
-    { code: "1D", y: 30 },
-    { code: "1C", y: 40 },
-    { code: "0B", y: 50 },
-    { code: "0A", y: 60 },
-    { code: "0G", y: 70 },
-    { code: "0F", y: 80 },
-    { code: "0E", y: 90 }
+    { code: "1G", y: -10 }, // above top line
+    { code: "1F", y: 0 },   // top line
+    { code: "1E", y: 10 },
+    { code: "1D", y: 20 },
+    { code: "1C", y: 30 },
+    { code: "0B", y: 40 },  // middle line
+    { code: "0A", y: 50 },
+    { code: "0G", y: 60 },  // SECOND LINE FROM BOTTOM (correct G4)
+    { code: "0F", y: 70 },
+    { code: "0E", y: 80 },  // bottom line
+    { code: "0D", y: 90 },
+    { code: "0C", y: 100 }  // Middle C (ledger)
 ];
 
+// BASS STAFF (correct mapping)
 const bassPositions = [
-    { code: "0D", y: -10 },
-    { code: "0C", y: 0 },
-    { code: "-1B", y: 10 },
-    { code: "-1A", y: 20 },
-    { code: "-1G", y: 30 },
-    { code: "-1F", y: 40 },
-    { code: "-1E", y: 50 },
-    { code: "-1D", y: 60 },
-    { code: "-1C", y: 70 },
-    { code: "-2B", y: 80 }
+    { code: "0C", y: -10 },  // Middle C (ledger above)
+    { code: "-1B", y: 0 },
+    { code: "-1A", y: 10 },  // top line
+    { code: "-1G", y: 20 },
+    { code: "-1F", y: 30 },
+    { code: "-1E", y: 40 },  // middle line
+    { code: "-1D", y: 50 },
+    { code: "-1C", y: 60 },
+    { code: "-2B", y: 70 },  // bottom line
+    { code: "-2A", y: 80 },
+    { code: "-2G", y: 90 }
 ];
 
 function createSlots(staffId, positions, outputId) {
@@ -47,7 +56,6 @@ function createSlots(staffId, positions, outputId) {
             slot.dataset.output = outputId;
 
             slot.addEventListener("click", openAccidentalPopup);
-
             staff.appendChild(slot);
         });
     }
@@ -69,8 +77,7 @@ function openAccidentalPopup(e) {
 
 document.querySelectorAll("#accidentalPopup button").forEach(btn => {
     btn.addEventListener("click", () => {
-        const acc = btn.dataset.acc;
-        placeNote(pendingNote, acc);
+        placeNote(pendingNote, btn.dataset.acc);
         document.getElementById("accidentalPopup").style.display = "none";
         pendingNote = null;
     });
